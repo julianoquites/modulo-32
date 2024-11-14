@@ -1,0 +1,31 @@
+// Consulta que retorna a lista de filmes e suas categorias correspondentes.
+SELECT f.title AS Filme, c.name AS Categoria
+FROM
+    film AS f
+    JOIN film_category AS fc ON f.film_id = fc.film_id
+    JOIN category AS c ON fc.category_id = c.category_id
+ORDER BY f.title;
+
+// Consulta que retorna a lista de todos os atores com o número filmes que cada ator participou. Lista ordenada pelo numero de filmes, iniciando pelos atores que mais atuaram.
+SELECT CONCAT(
+        a.first_name, ' ', a.last_name
+    ) AS Ator, COUNT(fa.film_id) AS Numero_de_Filmes
+FROM actor AS a
+    JOIN film_actor AS fa ON a.actor_id = fa.actor_id
+GROUP BY
+    a.actor_id
+ORDER BY Numero_de_Filmes DESC;
+
+// Consulta que retorna a lista de atores que atuaram em filmes com mais de duas horas de duração (120min). Lista ordenada pelo numero de filmes que cada ator participou.
+SELECT CONCAT(
+        a.first_name, ' ', a.last_name
+    ) AS Ator, COUNT(fa.film_id) AS Numero_de_Filmes_Com_Mais_de_120_Minutos
+FROM
+    actor AS a
+    JOIN film_actor AS fa ON a.actor_id = fa.actor_id
+    JOIN film AS f ON fa.film_id = f.film_id
+WHERE
+    f.length > 120
+GROUP BY
+    a.actor_id
+ORDER BY Numero_de_Filmes_Com_Mais_de_120_Minutos DESC;

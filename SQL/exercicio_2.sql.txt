@@ -1,0 +1,33 @@
+// Número de filmes por categoria, com o total de filmes no final
+WITH
+    Filme_Categoria AS (
+        SELECT f.title AS Filme, c.name AS Categoria
+        FROM
+            film AS f
+            JOIN film_category AS fc ON f.film_id = fc.film_id
+            JOIN category AS c ON fc.category_id = c.category_id
+    )
+SELECT Categoria, COUNT(*) AS Numero_de_Filmes
+FROM Filme_Categoria
+GROUP BY
+    Categoria
+UNION ALL
+SELECT 'Total de Filmes' AS Categoria, COUNT(*) AS Numero_de_Filmes
+FROM film;
+
+// Número total de filmes atuados
+SELECT COUNT(DISTINCT fa.film_id) AS Total_de_Filmes_Atuados
+FROM film_actor AS fa;
+
+// Número total de combinações de atuações em filmes da lista
+SELECT COUNT(fa.film_id) AS Total_de_Filmes FROM film_actor AS fa;
+
+
+// Número total de filmes com mais de 120 minutos em que os atores participaram
+SELECT
+    COUNT(DISTINCT fa.film_id) AS Total_de_Filmes_Com_Mais_de_120_Minutos
+FROM film_actor AS fa
+    JOIN film AS f ON fa.film_id = f.film_id
+WHERE
+    f.length > 120;
+

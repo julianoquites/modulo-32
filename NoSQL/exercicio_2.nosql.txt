@@ -1,0 +1,25 @@
+// Contagem de livros não publicados e com menos de 300 páginas
+db.biblioteca.find({
+  status: { $ne: "PUBLISH" },
+  pageCount: { $lt: 300 }
+}).count();
+
+// Contagem de livros que contêm as palavras MongoDB ou SQL Server no título
+db.biblioteca.find({
+  $or: [
+    { title: { $regex: /MongoDB/i } },
+    { title: { $regex: /SQL Server/i } }
+  ]
+}).count();
+
+// Contagem de livros onde o ISBN começa com 18
+db.biblioteca.find({
+  isbn: { $regex: /^18/ }
+}).count();
+
+// Contagem de livros que contêm a palavra JAVA ou Mobile na descrição (LongDescription)
+db.biblioteca.find({
+  longDescription: { $regex: /(java|mobile)/i }
+}).count();
+
+

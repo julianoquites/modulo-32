@@ -1,0 +1,23 @@
+//  Busca de quantos livros não estão com o status publicado e pageCount menor que 300
+db.biblioteca.find({
+  status: { $ne: "PUBLISH" },
+  pageCount: { $lt: 300 }
+}).count();
+
+// Busca de livros que contém as palavras MongoDB e SQL Server no título
+db.biblioteca.find({
+  $or: [
+    { title: { $regex: /MongoDB/i } },
+    { title: { $regex: /SQL Server/i } }
+  ]
+});
+
+// Busca com expressão regular onde ISBN começa com 18
+db.biblioteca.find({
+  isbn: { $regex: /^18/ }
+});
+
+//  Busca de livros que contém a palavra JAVA ou Mobile na descrição do livro (LongDescription)
+db.biblioteca.find({
+  longDescription: { $regex: /(java|mobile)/i }
+});
